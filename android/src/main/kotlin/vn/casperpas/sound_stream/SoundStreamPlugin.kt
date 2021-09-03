@@ -387,8 +387,8 @@ public class SoundStreamPlugin : FlutterPlugin,
                     val shortOut = recorder.read(data, 0, mPeriodFrames)
                     // https://flutter.io/platform-channels/#codec
                     // convert short to int because of platform-channel's limitation
-                    if (shortOut.isEmpty()) {
-                        return
+                    if (shortOut < 1) {
+                        return;
                     }
                     val byteBuffer = ByteBuffer.allocate(shortOut * 2)
                     byteBuffer.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(data)
