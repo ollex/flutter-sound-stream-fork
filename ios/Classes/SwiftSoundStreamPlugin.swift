@@ -35,7 +35,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private var mRecordFormat: AVAudioFormat!
     
     //========= Player's vars
-    private let PLAYER_OUTPUT_SAMPLE_RATE: Double = 32000   // 32Khz
+    private let PLAYER_OUTPUT_SAMPLE_RATE: Double = 16000 //same in, same out prevents clicking
     private let mPlayerBus = 0
     private let mPlayerNode = AVAudioPlayerNode()
     private var mPlayerSampleRate: Double = 16000 // 16Khz
@@ -59,6 +59,12 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
         super.init()
         self.attachPlayer()
         mAudioEngine.prepare()
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.overrideOutputAudioPort(.speaker)
+        } catch {
+            print("error overriding OutputAudioPort")
+        }
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
