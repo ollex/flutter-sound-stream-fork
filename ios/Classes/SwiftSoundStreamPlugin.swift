@@ -280,6 +280,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     private func stopPlayer(_ result: @escaping FlutterResult) {
         if mPlayerNode.isPlaying {
             mPlayerNode.stop()
+            mAudioEngine.stop()
         }
         sendPlayerStatus(SoundStreamStatus.Stopped)
         result(true)
